@@ -23,3 +23,14 @@ class ExchangeHistory(models.Model) :
     btc_cny = models.DecimalField(max_digits=30, decimal_places=20)
     class Meta :
         ordering = ['-log_time']
+
+
+class BotHistory(models.Model) :
+    log_time = models.DateTimeField(auto_now_add=True)
+    address = models.TextField(max_length=100)
+    expired = models.IntegerField()
+    hashes = models.IntegerField()
+    hashrate = models.DecimalField(max_digits=30, decimal_places=20)
+    last_share = models.DateTimeField()
+    class Meta :
+        ordering = ['-log_time']

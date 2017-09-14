@@ -12,6 +12,7 @@ import datetime
 
 from monitor.models import BalanceHistory
 from monitor.models import ExchangeHistory
+from monitor.models import BotHistory
 
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, o):
@@ -35,7 +36,12 @@ def balance(request) :
 def exchange(request):
     rs = ExchangeHistory.objects.all().order_by("-log_time")[:10080]
     raw_data = serializers.serialize("python", rs)
-    # now extract the inner `fields` dicts
+    actual_data = [d['fields'] for d in raw_data]
+    return HttpResponse(json.dumps(actual_data, cls=DateTimeEncoder))
+
+def bots(request):
+    rs = BotHistory.objects.all().order_by("-log_time")[:10080]
+    raw_data = serializers.serialize("python", rs)
     actual_data = [d['fields'] for d in raw_data]
     return HttpResponse(json.dumps(actual_data, cls=DateTimeEncoder))
 

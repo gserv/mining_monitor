@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/balance', monitor.views.balance),
     url(r'^api/exchange', monitor.views.exchange),
+    url(r'^api/bots', monitor.views.bots),
 ]

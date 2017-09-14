@@ -9,6 +9,7 @@ import logging
 from monitor.configure import configure
 from monitor.models import BalanceHistory
 from monitor.models import ExchangeHistory
+from monitor.models import BotHistory
 
 
 logger = logging.getLogger("tasks")
@@ -69,8 +70,25 @@ def balanceScanJob():
             update_time=datetime.datetime.now())
 
 
+def botScanJob():
+    botResp = requests.request("GET", "http://api.minexmr.com:8080/get_wid_stats?address="+configure.address)
+    botRespContent = botResp.text
+    logger.info("recv bot response >> " + botRespContent)
+    botObj = json.loads(botRespContent)
+    now = datetime.datetime.now()
+    #
+    for item in botObj :
+        for suffix in configure.botsSuffix :
+            if item["address"].endswith(suffix) :
+                BotHistory.objects.create(log_time=now, address=item["address"], expired=item["expired"], hashes=item["hashes"],
+                                          hashrate=item["hashrate"], last_share=datetime.datetime.fromtimestamp(float(item['lastShare']))).save()
+            else :
+                print("[bot status] pass address > " + item["address"])
+
+
 # 设置定时调度
 schedule.every(1).minutes.do(exchangeScanJob)
+schedule.every(1).minutes.do(botScanJob)
 schedule.every(10).minutes.do(balanceScanJob)
 
 
@@ -82,6 +100,7 @@ def scheduleThread():
         logger.info("run job first start ...")
         # 首次执行
         exchangeScanJob()
+        botScanJob()
         balanceScanJob()
     except Exception as err:
         logger.warning("schedule job run exception >> ", err)
