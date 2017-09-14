@@ -1,0 +1,22 @@
+
+# 初始项目
+pip install  django
+django-admin.py startproject mining_monitor
+python manage.py startapp monitor
+修改settiongs.py INSTALLED_APPS，增加monitor
+python manage.py runserver
+
+# 数据库
+monitor/models.py
+python manage.py migrate
+
+# admin
+python manage.py createsuperuser
+
+# 定时调度
+pip install django-kronos
+INSTALLED_APPS >> 'kronos'
+
+
+
+

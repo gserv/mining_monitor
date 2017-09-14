@@ -99,3 +99,16 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+
+.idea
+db.sqlite3
+*.iml
+logs
+node_modules
+build
+
+
+
+
+

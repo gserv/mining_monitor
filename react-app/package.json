@@ -1,0 +1,21 @@
+{
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^2.13.1",
+    "echarts": "^3.7.1",
+    "moment": "^2.18.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.13"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && rm -r -f ..\\monitor\\static\\* && cp -r .\\build\\.  ..\\monitor\\static\\",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://104.236.134.159:8000/",
+  "homepage": "./"
+}
