@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import ChartBalanceHistory from "./chart/ChartBalanceHistory"
 import ChartExchangeHistory from "./chart/ChartExchangeHistory"
 import ChartBotHashrateHistory from "./chart/ChartBotHashrateHistory"
+import ChartDifficultyHistory from "./chart/ChartDifficultyHistory"
 import InfoSummary from "./chart/InfoSummary"
 
 class App extends Component {
@@ -49,13 +49,16 @@ class App extends Component {
                     exchangeArray={this.state.exchangeArray}
                     balanceArray={this.state.balanceArray}
                 ></InfoSummary>
+                <ChartDifficultyHistory
+                    balanceArray={this.state.balanceArray}
+                ></ChartDifficultyHistory>
+                <ChartBotHashrateHistory
+                    botsArray={this.state.botsArray}
+                ></ChartBotHashrateHistory>
                 <ChartExchangeHistory
                     exchangeArray={this.state.exchangeArray}
                     balanceArray={this.state.balanceArray}
                 ></ChartExchangeHistory>
-                <ChartBotHashrateHistory
-                    botsArray={this.state.botsArray}
-                ></ChartBotHashrateHistory>
           </div>
         );
     }
