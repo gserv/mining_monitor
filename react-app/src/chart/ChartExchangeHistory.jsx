@@ -47,11 +47,6 @@ export default class ChartBalanceHistory extends Component {
         myChart.setOption({
             tooltip: {
                 trigger: 'axis',
-                formatter: function (params) {
-                    params = params[0];
-                    var date = new Date(params.name);
-                    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-                },
                 axisPointer: {
                     animation: false
                 }
@@ -68,7 +63,7 @@ export default class ChartBalanceHistory extends Component {
             },
             yAxis: {
                 type: 'value',
-                boundaryGap: [0, '100%'],
+                boundaryGap: [0, '30%'],
                 scale: true,
                 splitLine: {
                     show: false

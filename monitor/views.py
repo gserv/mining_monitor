@@ -27,20 +27,20 @@ class DateTimeEncoder(json.JSONEncoder):
 
 # Create your views here.
 def balance(request) :
-    rs = BalanceHistory.objects.all().order_by("-update_time")[:52560]
+    rs = BalanceHistory.objects.all().order_by("-update_time")[:2000]
     raw_data = serializers.serialize("python", rs)
     # now extract the inner `fields` dicts
     actual_data = [d['fields'] for d in raw_data]
     return HttpResponse(json.dumps(actual_data, cls=DateTimeEncoder))
 
 def exchange(request):
-    rs = ExchangeHistory.objects.all().order_by("-log_time")[:10080]
+    rs = ExchangeHistory.objects.all().order_by("-log_time")[:1000]
     raw_data = serializers.serialize("python", rs)
     actual_data = [d['fields'] for d in raw_data]
     return HttpResponse(json.dumps(actual_data, cls=DateTimeEncoder))
 
 def bots(request):
-    rs = BotHistory.objects.all().order_by("-log_time")[:10080]
+    rs = BotHistory.objects.all().order_by("-log_time")[:1000]
     raw_data = serializers.serialize("python", rs)
     actual_data = [d['fields'] for d in raw_data]
     return HttpResponse(json.dumps(actual_data, cls=DateTimeEncoder))
