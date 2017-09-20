@@ -36,9 +36,11 @@ export default class ChartBalanceHistory extends Component {
                 key: '支付阈值',
                 value: this.props.balanceArray[0].thold
             })
+        }
+        if (readyBalance && this.props.hashrate) {
             propArray.push({
                 key: '预计下次支付（天）',
-                value: (Number(this.props.balanceArray[0].thold) - Number(this.props.balanceArray[0].balance)) / (Number(this.props.balanceArray[0].difficulty) * 200)
+                value: (Number(this.props.balanceArray[0].thold) - Number(this.props.balanceArray[0].balance)) / (Number(this.props.balanceArray[0].difficulty) * this.props.hashrate)
             })
         }
         return (

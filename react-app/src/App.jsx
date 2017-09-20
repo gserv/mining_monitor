@@ -13,11 +13,12 @@ class App extends Component {
         this.state = {
             exchangeArray : null,
             balanceArray : null,
-            botsArray : null
+            botsArray : null,
+            hashrate: null
         }
     }
 
-    componentDidMount() {
+    loaddata() {
         var comp = this;
         fetch("../api/exchange")
             .then(function(response) {return response.json()})
@@ -42,18 +43,36 @@ class App extends Component {
             });
     }
 
+    componentDidMount() {
+        this.loaddata();
+        var comp = this;
+        window.setInterval(function() {
+            comp.loaddata();
+        }, 10 * 1000);
+    }
+
+    // 算力
+    onCalculatedHashrate(hashrate) {
+        this.setState({
+            hashrate : hashrate
+        })
+    }
+
     render() {
         return (
             <div>
                 <InfoSummary
                     exchangeArray={this.state.exchangeArray}
                     balanceArray={this.state.balanceArray}
+                    hashrate={this.state.hashrate}
                 ></InfoSummary>
                 <ChartDifficultyHistory
                     balanceArray={this.state.balanceArray}
                 ></ChartDifficultyHistory>
                 <ChartBotHashrateHistory
                     botsArray={this.state.botsArray}
+                    onCalculatedHashrate={this.onCalculatedHashrate.bind(this)}
+                    hashrate={this.state.hashrate}
                 ></ChartBotHashrateHistory>
                 <ChartExchangeHistory
                     exchangeArray={this.state.exchangeArray}
